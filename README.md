@@ -24,7 +24,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/ishantSikdar/mindo-webapp.git
+git clone https://github.com/easc01/mindo-webapp.git
 
 # Navigate to the project directory
 cd your-repository
@@ -114,7 +114,6 @@ npx shadcn-ui@latest add [component-name]
 ```
 
 Replace `[component-name]` with components like `button`, `dialog`, `card`, etc.
-
 
 ## Acknowledgments
 
