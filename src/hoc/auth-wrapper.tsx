@@ -42,8 +42,7 @@ const AuthWrapper = <P extends object>(
           // success case: token was valid
           //  send inside app & save user data to redux
           if (newUserData?.data) {
-            dispatch(updateUserData(newUserData?.data))
-            navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)
+            dispatch(updateUserData(newUserData?.data)) // handle blank accessToken
           }
         }
       } else {

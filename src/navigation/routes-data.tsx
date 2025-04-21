@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 import AuthWrapper from '@/hoc/auth-wrapper'
 import ROUTES from '@/navigation/routes'
-import { title } from 'process'
 
 interface Route {
   path: string

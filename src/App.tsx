@@ -13,7 +13,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { queryClient } from '@/lib/api'
 import ErrorFallBack from '@/pages/errors/error-fallback'
 
-const App = () => {
+const TApp = () => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -35,15 +35,14 @@ const App = () => {
   )
 }
 
-function TApp() {
+function App() {
   // TODO: refactor into Sign-in component
   const handleLoginSuccess = (res: CredentialResponse) => {
     const myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
 
     const raw = JSON.stringify({
-      idToken: res.credential,
-      accessToken: 'accessToken',
+      accessToken: res.credential,
     })
 
     fetch(`${appConfig.serverBaseUrl}/api/auth/google`, {

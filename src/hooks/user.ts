@@ -2,7 +2,6 @@ import useApi from '@/lib/api'
 import API_URLS from '@/lib/api-urls'
 import { APIResponse, GoogleAuth, Token } from '@/types/common'
 import { UserData } from '@/types/user'
-import { useMutation } from '@tanstack/react-query'
 
 export const useSignIn = () => {
   const { usePost } = useApi()
