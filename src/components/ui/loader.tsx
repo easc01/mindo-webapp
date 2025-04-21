@@ -1,10 +1,7 @@
 import { cn } from '@/lib/utils'
 
 interface ILoaderProps {
-  label?: string
-  isHorizontal?: boolean
   className?: string
-  labelStyle?: string
   sizeClassName?: string
 }
 

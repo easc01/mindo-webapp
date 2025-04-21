@@ -1,6 +1,7 @@
 const ROUTES = {
   LAUNCH_SCREEN: '/',
   HELPANDSUPPORT: '/help',
+  SIGN_IN: '/sign-in',
   ERROR_403: '/error',
 
   PLAYLIST: {

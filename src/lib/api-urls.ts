@@ -1,6 +1,7 @@
 const API_URLS = {
   AUTH: {
     GOOGLE_SIGNIN: '/auth/google',
+    REFRESH: '/auth/refresh',
   },
   PLAYLIST: {
     PLAYLIST_MAIN: '/playlists',

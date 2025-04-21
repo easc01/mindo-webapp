@@ -7,6 +7,12 @@ import {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { appConfig } from './config'
+import { useAppSelector } from '@/hooks/redux'
+import { useNavigate } from 'react-router-dom'
+import ROUTES from '@/navigation/routes'
+import { useDispatch } from 'react-redux'
+import { resetUserData, updateUserData } from '@/store/user-data'
+import { refreshUserToken } from '@/hooks/user'
 
 enum HttpMethod {
   GET = 'GET',
@@ -36,40 +42,57 @@ const invalidateQueryKeys = (queryKeys: (string | object)[]) => {
 }
 
 const useApi = () => {
-  const baseUrl = appConfig.serverBaseUrl || 'http://localhost:8080/api/'
-  const accessToken = localStorage.getItem('accessToken')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const baseUrl = appConfig.serverBaseUrl || 'http://localhost:8080/api'
+  const { accessToken } = useAppSelector((state) => state.userData)
 
   const request = async (
     endpoint: string,
     options: RequestOptions
   ): Promise<any> => {
     const url = `${baseUrl}${endpoint}`
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `${accessToken}`,
-      ...options.headers,
-    }
 
-    try {
-      const response = await fetch(url, {
+    const doFetch = async (token: string) =>
+      fetch(url, {
         method: options.method,
-        headers,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(accessToken ? { Authorization: token } : {}),
+          ...options.headers,
+        },
         body: options.body ? JSON.stringify(options.body) : undefined,
       })
 
-      if (response.status === 403) {
-        // re route to login page
+    let response = await doFetch(accessToken)
+
+    // refresh the token
+    if (response.status === 401) {
+      const { statusCode, data } = await refreshUserToken()
+
+      // refresh token expired, relogin user
+      if (statusCode === 401) {
+        dispatch(resetUserData())
+        navigate(ROUTES.SIGN_IN)
       }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+      // token refreshed
+      if (data && statusCode === 202) {
+        dispatch(
+          updateUserData({
+            accessToken: data.data.accessToken,
+          })
+        )
+        // retry with the new token
+        response = await doFetch(data.data.accessToken)
       }
-
-      return await response.json()
-    } catch (error) {
-      console.error('Fetch error:', error)
-      throw error
     }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    return await response.json()
   }
 
   const useGet = <T>(

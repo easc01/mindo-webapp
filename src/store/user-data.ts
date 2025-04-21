@@ -1,22 +1,34 @@
+import { UserData } from '@/types/user'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface IUserData {}
-
-const initialState: IUserData = {}
+const initialState: UserData = {
+  accessToken: '',
+  userId: '',
+  userType: '',
+  username: '',
+  profilePictureUrl: '',
+  oauthClientId: '',
+  bio: '',
+  name: '',
+  mobile: '',
+  email: '',
+  lastLoginAt: '',
+  updatedAt: '',
+  createdAt: '',
+  updatedBy: '',
+}
 
 const userDataSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {
-    updateUserData: (
-      state,
-      { payload }: PayloadAction<Partial<IUserData>>
-    ) => ({
+    resetUserData: () => initialState,
+    updateUserData: (state, { payload }: PayloadAction<Partial<UserData>>) => ({
       ...state,
       ...payload,
     }),
   },
 })
 
-export const { updateUserData } = userDataSlice.actions
+export const { resetUserData, updateUserData } = userDataSlice.actions
 export default userDataSlice.reducer
