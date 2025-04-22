@@ -30,9 +30,7 @@ export const useUpdateUser = (userId: string) => {
 export const refreshUserToken = async () => {
   const response = await fetch(API_URLS.AUTH.REFRESH, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    credentials: 'include',
   })
 
   if (!response.ok) {
