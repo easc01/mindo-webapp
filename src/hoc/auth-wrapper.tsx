@@ -40,7 +40,7 @@ const AuthWrapper = <P extends object>(
     }, [])
 
     if (isLoading) {
-      return <Loader className='h-screen w-screen' />
+      return <Loader className='size-full' />
     }
 
     return <WrappedComponent {...props} />

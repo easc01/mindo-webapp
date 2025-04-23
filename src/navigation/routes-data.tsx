@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import AuthWrapper from '@/hoc/auth-wrapper'
 import ROUTES from '@/navigation/routes'
+import LaunchScreen from '@/pages'
 
 interface Route {
   path: string
@@ -23,14 +24,15 @@ const protectRoutes = (routes: Route[]): Route[] => {
 }
 
 const mainRoutes = [
-  {
-    path: ROUTES.LAUNCH_SCREEN,
-    element: <>Launch Screen</>,
-    title: '',
-  },
+
 ]
 
 const publicRoutes = [
+  {
+    path: ROUTES.LAUNCH_SCREEN,
+    element: <LaunchScreen />,
+    title: '',
+  },
   {
     path: ROUTES.SIGN_IN,
     element: <>Sign In</>,
@@ -38,7 +40,7 @@ const publicRoutes = [
   },
 ]
 
-const protectedRoutes = protectRoutes([...mainRoutes])
+const protectedRoutes = protectRoutes([])
 
 const routesData: Route[] = [...protectedRoutes, ...publicRoutes]
 
