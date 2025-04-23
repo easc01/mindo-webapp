@@ -1,5 +1,5 @@
 import { SidebarProvider } from '@/components/ui/sidebar'
-import DesktopSidePanel from '@/components/desktop/side-panel'
+import DesktopSidePanel from '@/components/desktop/sidepanel/side-panel'
 import { Toaster } from '@/components/ui/sonner'
 import AppDialog from './app-dialog'
 
