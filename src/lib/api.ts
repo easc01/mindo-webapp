@@ -11,7 +11,7 @@ import { useAppSelector } from '@/hooks/redux'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '@/navigation/routes'
 import { useDispatch } from 'react-redux'
-import { resetUserData, updateUserData } from '@/store/user-data'
+import { resetUserData, updateUserData } from '@/store/user-data-slice'
 import { refreshUserToken } from '@/hooks/user'
 
 enum HttpMethod {

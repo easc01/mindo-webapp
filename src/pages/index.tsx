@@ -1,10 +1,25 @@
-import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
+import { SidebarTrigger } from '@/components/ui/sidebar'
+import { useAppDispatch } from '@/hooks/redux'
+import { ContentEnum } from '@/lib/content-registry'
+import { openDialog } from '@/store/app-dialog-slice'
 
 export default function LaunchScreen() {
+  const dispatch = useAppDispatch()
   return (
     <>
       <SidebarTrigger />
-      Launch screen
+      <button
+        onClick={() =>
+          dispatch(
+            openDialog({
+              allowClose: false,
+              dialogContentType: ContentEnum.SIGN_IN,
+            })
+          )
+        }
+      >
+        Launch screen
+      </button>
     </>
   )
 }

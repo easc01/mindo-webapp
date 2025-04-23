@@ -1,7 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
 import routesData from '@/navigation/routes-data'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import DesktopSidePanel from '@/components/desktop/side-panel'
+import { Route, Routes } from 'react-router-dom'
+import RootLayout from '@/components/common/root-layout'
 
 const PageRouter = () => {
   const pageRoutes = routesData.map((route) => (
@@ -12,16 +11,6 @@ const PageRouter = () => {
     <RootLayout>
       <Routes>{pageRoutes}</Routes>
     </RootLayout>
-  )
-}
-
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <SidebarProvider className='font-ubuntu bg-app-dark-0 text-white'>
-      <DesktopSidePanel />
-
-      <main>{children}</main>
-    </SidebarProvider>
   )
 }
 
