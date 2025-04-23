@@ -4,10 +4,6 @@ interface SidePanelGroupProps {
   items: SidePanelGroupItemProps[]
 }
 
-interface SidePanelGroupItemsProps {
-  groupItems: SidePanelGroupItemProps[]
-}
-
 interface SidePanelGroupItemProps {
   label: string
   onClick?: () => void
@@ -21,7 +17,6 @@ interface SidePanelGroupHeaderProps {
 
 export type {
   SidePanelGroupProps,
-  SidePanelGroupItemsProps,
   SidePanelGroupItemProps,
   SidePanelGroupHeaderProps,
 }

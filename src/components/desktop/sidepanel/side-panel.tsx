@@ -25,29 +25,11 @@ import {
 import {
   SidePanelGroupHeaderProps,
   SidePanelGroupItemProps,
-  SidePanelGroupItemsProps,
   SidePanelGroupProps,
 } from './side-panel-types'
-import { communities, playlists, quizzes } from './mock'
+import { communities, playlists } from './mock'
 
-interface Props {}
-
-const DesktopSidePanel: React.FC<Props> = () => {
-  const renderGroup = (
-    title: string,
-    icon: React.ReactNode,
-    items: SidePanelGroupItemProps[]
-  ) => (
-    <SidebarMenu>
-      <Collapsible defaultOpen className='group/collapsible'>
-        <SidebarMenuItem>
-          <SidePanelGroupHeader label={title} icon={icon} />
-          <SidePanelGroupItems groupItems={items} />
-        </SidebarMenuItem>
-      </Collapsible>
-    </SidebarMenu>
-  )
-
+const DesktopSidePanel: React.FC = () => {
   return (
     <Sidebar collapsible='offcanvas' className='bg-app-dark-1'>
       <SidebarHeader className='flex-row'>
