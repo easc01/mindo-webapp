@@ -44,7 +44,7 @@ const invalidateQueryKeys = (queryKeys: (string | object)[]) => {
 const useApi = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const baseUrl = appConfig.serverBaseUrl || 'http://localhost:8080/api'
+  const baseUrl = appConfig.serverBaseUrl
   const { accessToken } = useAppSelector((state) => state.userData)
 
   const request = async (

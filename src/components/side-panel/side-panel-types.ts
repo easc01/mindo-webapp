@@ -2,6 +2,7 @@ interface SidePanelGroupProps {
   title: string
   icon: React.ReactNode
   items: SidePanelGroupItemProps[]
+  onHeaderClick?: () => void
 }
 
 interface SidePanelGroupItemProps {

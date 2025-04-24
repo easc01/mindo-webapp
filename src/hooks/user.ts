@@ -1,11 +1,12 @@
 import useApi from '@/lib/api'
 import API_URLS from '@/lib/api-urls'
-import { APIResponse, GoogleAuth, Token } from '@/types/common'
+import { appConfig } from '@/lib/config'
+import { APIResponse, Token } from '@/types/common'
 import { UserData } from '@/types/user'
 
 export const useSignIn = () => {
   const { usePost } = useApi()
-  return usePost<GoogleAuth>(API_URLS.AUTH.GOOGLE_SIGNIN, [
+  return usePost<APIResponse<UserData>>(API_URLS.AUTH.GOOGLE_SIGNIN, [
     API_URLS.AUTH.GOOGLE_SIGNIN,
   ])
 }
@@ -28,16 +29,23 @@ export const useUpdateUser = (userId: string) => {
 }
 
 export const refreshUserToken = async () => {
-  const response = await fetch(API_URLS.AUTH.REFRESH, {
-    method: 'POST',
-    credentials: 'include',
-  })
+  try {
+    const response = await fetch(
+      `${appConfig.serverBaseUrl}${API_URLS.AUTH.REFRESH}`,
+      {
+        method: 'POST',
+        credentials: 'include',
+      }
+    )
 
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error?.message || `HTTP error: ${response.status}`)
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error?.message || `HTTP error: ${response.status}`)
+    }
+
+    const data: APIResponse<Token> = await response.json()
+    return { data, statusCode: response.status }
+  } catch (error) {
+    return { data: null, statusCode: 404 }
   }
-
-  const data: APIResponse<Token> = await response.json()
-  return { data, statusCode: response.status }
 }

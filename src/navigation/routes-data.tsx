@@ -1,7 +1,11 @@
 import { ReactNode } from 'react'
 import AuthWrapper from '@/hoc/auth-wrapper'
 import ROUTES from '@/navigation/routes'
-import LaunchScreen from '@/pages'
+import PlaylistMainPage from '@/pages/playlist/playlist-main'
+import LaunchScreen from '@/pages/common/launch-screen'
+import SignInPage from '@/pages/common/sign-in'
+import CommunityMainPage from '@/pages/community/community-main'
+import QuizMainPage from '@/pages/quiz/quiz-main'
 
 interface Route {
   path: string
@@ -23,25 +27,49 @@ const protectRoutes = (routes: Route[]): Route[] => {
   }))
 }
 
-const mainRoutes = [
-
-]
-
-const publicRoutes = [
+const publicRoutes: Route[] = [
+  {
+    path: ROUTES.SIGN_IN,
+    element: <SignInPage />,
+    title: 'Sign in',
+  },
   {
     path: ROUTES.LAUNCH_SCREEN,
     element: <LaunchScreen />,
     title: '',
   },
+]
+
+const playlistRoutes: Route[] = [
   {
-    path: ROUTES.SIGN_IN,
-    element: <>Sign In</>,
-    title: 'Sign in',
+    path: ROUTES.PLAYLIST.PLAYLIST_MAIN,
+    element: <PlaylistMainPage />,
+    title: 'Playlist',
   },
 ]
 
-const protectedRoutes = protectRoutes([])
+const quizRoutes: Route[] = [
+  {
+    path: ROUTES.QUIZ.QUIZ_MAIN,
+    element: <QuizMainPage />,
+    title: 'Playlist',
+  },
+]
 
-const routesData: Route[] = [...protectedRoutes, ...publicRoutes]
+const communityRoutes: Route[] = [
+  {
+    path: ROUTES.COMMUNITIES.COMMUNITIES_MAIN,
+    element: <CommunityMainPage />,
+    title: 'Playlist',
+  },
+]
+
+const protectedRoutes = protectRoutes([
+  ...playlistRoutes,
+  ...quizRoutes,
+  ...communityRoutes,
+])
+
+const routesData: Route[] = [...publicRoutes, ...protectedRoutes]
 
 export default routesData

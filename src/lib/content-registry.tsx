@@ -1,4 +1,4 @@
-import SignIn from '@/components/common/sign-in'
+import SignIn from '@/components/common/signin-dialog'
 
 enum ContentEnum {
   SIGN_IN = 'SIGN_IN',

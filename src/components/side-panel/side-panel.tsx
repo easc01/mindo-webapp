@@ -27,9 +27,23 @@ import {
   SidePanelGroupItemProps,
   SidePanelGroupProps,
 } from './side-panel-types'
-import { communities, playlists } from './mock'
+import { communities, playlists, quizzes } from './mock'
+import ROUTES from '@/navigation/routes'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const DesktopSidePanel: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const routesWithSidePanel = [
+    ROUTES.PLAYLIST.PLAYLIST_MAIN,
+    ROUTES.QUIZ.QUIZ_MAIN,
+    ROUTES.COMMUNITIES.COMMUNITIES_MAIN,
+  ]
+
+  if (!routesWithSidePanel.includes(location.pathname as any)) {
+    return <></>
+  }
+
   return (
     <Sidebar collapsible='offcanvas' className='bg-app-dark-1'>
       <SidebarHeader className='flex-row'>
@@ -44,21 +58,24 @@ const DesktopSidePanel: React.FC = () => {
         </div>
       </SidebarHeader>
 
-      <SidebarContent className='scrollbar-thin scrollbar-thumb-app-dark-2 scrollbar-track-app-dark-1 p-2'>
+      <SidebarContent className='scrollbar-track-app-dark-1 p-2'>
         <SidePanelGroup
           title='Playlists'
           icon={<BookText />}
           items={playlists}
+          onHeaderClick={() => navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)}
         />
         <SidePanelGroup
           title='Quizzes'
           icon={<BookOpenCheck />}
-          items={playlists}
+          items={quizzes}
+          onHeaderClick={() => navigate(ROUTES.QUIZ.QUIZ_MAIN)}
         />
         <SidePanelGroup
           title='Communities'
           icon={<UsersRound />}
           items={communities}
+          onHeaderClick={() => navigate(ROUTES.COMMUNITIES.COMMUNITIES_MAIN)}
         />
       </SidebarContent>
 
@@ -75,15 +92,20 @@ const SidePanelGroup: React.FC<SidePanelGroupProps> = ({
   icon,
   items,
   title,
+  onHeaderClick,
 }) => (
   <SidebarMenu>
     <Collapsible defaultOpen className='group/collapsible'>
       <SidebarMenuItem>
-        <SidePanelGroupHeader label={title} icon={icon} />
+        <SidePanelGroupHeader
+          onClick={onHeaderClick}
+          label={title}
+          icon={icon}
+        />
         <CollapsibleContent>
           <SidebarMenuSub>
-            {items.map((item) => (
-              <SidePanelGroupItem {...item} />
+            {items.map((item, i) => (
+              <SidePanelGroupItem key={i} {...item} />
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>
@@ -109,19 +131,18 @@ const SidePanelGroupHeader: React.FC<SidePanelGroupHeaderProps> = ({
   icon,
   onClick,
 }) => (
-  <CollapsibleTrigger
+  <SidebarMenuButton
     onClick={onClick}
-    asChild
-    className='hover:bg-app-dark-2 text-lg'
+    className='hover:bg-app-dark-2 flex cursor-pointer justify-between text-lg'
   >
-    <SidebarMenuButton className='flex justify-between'>
-      <div className='flex items-center gap-2'>
-        <span>{icon}</span>
-        <span>{label}</span>
-      </div>
+    <div className='flex items-center gap-2'>
+      <span>{icon}</span>
+      <span>{label}</span>
+    </div>
+    <CollapsibleTrigger asChild onClick={(e) => e.stopPropagation()}>
       <ChevronDown className='transition-transform group-data-[state=open]/collapsible:rotate-180' />
-    </SidebarMenuButton>
-  </CollapsibleTrigger>
+    </CollapsibleTrigger>
+  </SidebarMenuButton>
 )
 
 export default DesktopSidePanel

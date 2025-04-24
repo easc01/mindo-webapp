@@ -29,7 +29,7 @@ const AppDialog: React.FC = () => {
     >
       <DialogContent
         showCloseButton={allowClose}
-        className='bg-app-dark-1 w-max border-none text-white'
+        className='bg-app-dark-1 w-max border-none text-white outline-none'
       >
         <DialogHeader className='hidden'>
           <DialogTitle></DialogTitle>

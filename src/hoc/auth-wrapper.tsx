@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Loader from '@/components/ui/loader'
-import { resetUserData, updateUserData } from '@/store/user-data-slice'
+import { resetUserData } from '@/store/user-data-slice'
 import ROUTES from '@/navigation/routes'
-import { refreshUserToken } from '@/hooks/user'
-import { useAppSelector } from '@/hooks/redux'
+import { ACCESS_TOKEN_KEY } from '@/lib/constants'
 
 const AuthWrapper = <P extends object>(
   WrappedComponent: React.ComponentType<P>
@@ -13,35 +11,14 @@ const AuthWrapper = <P extends object>(
   const HOC: React.FC<P> = (props) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { accessToken } = useAppSelector((state) => state.userData)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-
-    const initAuth = async () => {
-      if (!accessToken) {
-        setIsLoading(true)
-        const { data, statusCode } = await refreshUserToken()
-
-        if (statusCode === 202 && data.data.accessToken) {
-          dispatch(
-            updateUserData({
-              accessToken: data.data.accessToken,
-            })
-          )
-        } else {
-          dispatch(resetUserData())
-          navigate(ROUTES.SIGN_IN)
-        }
-        setIsLoading(false)
-      }
-    }
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)
 
     useEffect(() => {
-      initAuth()
+      if (!accessToken) {
+        dispatch(resetUserData())
+        navigate(ROUTES.SIGN_IN)
+      }
     }, [])
-
-    if (isLoading) {
-      return <Loader className='size-full' />
-    }
 
     return <WrappedComponent {...props} />
   }

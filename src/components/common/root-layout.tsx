@@ -1,5 +1,5 @@
 import { SidebarProvider } from '@/components/ui/sidebar'
-import DesktopSidePanel from '@/components/desktop/sidepanel/side-panel'
+import DesktopSidePanel from '@/components/side-panel/side-panel'
 import { Toaster } from '@/components/ui/sonner'
 import AppDialog from './app-dialog'
 
@@ -14,7 +14,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       <Toaster />
       <AppDialog />
 
-      <main>{children}</main>
+      <main className='w-full'>{children}</main>
     </SidebarProvider>
   )
 }

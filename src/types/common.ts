@@ -4,12 +4,8 @@ interface APIResponse<T> {
   data: T
 }
 
-interface GoogleAuth {
-  idToken: string
-}
-
 interface Token {
   accessToken: string
 }
 
-export type { APIResponse, GoogleAuth, Token }
+export type { APIResponse, Token }
