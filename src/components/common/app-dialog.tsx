@@ -7,26 +7,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { closeDialog } from '@/store/app-dialog-slice'
-import contentMap from '@/lib/content-registry'
-import actionMap from '@/lib/action-registry'
+import { useDialogContext } from '@/context/dialog-context'
 
 const AppDialog: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const {
-    isOpen,
-    allowClose,
-    actionLabel,
-    dialogContentType,
-    dialogActionType,
-  } = useAppSelector((state) => state.appDialog)
+  const { dialog, closeDialog } = useDialogContext()
+  const { isOpen, action, content, allowClose } = dialog
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={() => allowClose && dispatch(closeDialog())}
-    >
+    <Dialog open={isOpen} onOpenChange={() => allowClose && closeDialog()}>
       <DialogContent
         showCloseButton={allowClose}
         className='bg-app-dark-1 w-max border-none text-white outline-none'
@@ -36,15 +24,15 @@ const AppDialog: React.FC = () => {
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
-        <main>{dialogContentType ? contentMap[dialogContentType] : <></>}</main>
+        <main>{content}</main>
 
         <DialogFooter>
-          {actionLabel && dialogActionType && (
+          {action && (
             <Button
               className='bg-app-dark-2 hover:bg-app-dark-0'
-              onClick={actionMap[dialogActionType]}
+              onClick={action.execute}
             >
-              {actionLabel}
+              {action.label}
             </Button>
           )}
         </DialogFooter>

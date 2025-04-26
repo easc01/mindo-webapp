@@ -1,19 +1,16 @@
+import SignIn from '@/components/common/signin-dialog'
+import { useDialogContext } from '@/context/dialog-context'
 import { useEffect } from 'react'
-import { useAppDispatch } from '@/hooks/redux'
-import { openDialog } from '@/store/app-dialog-slice'
-import { ContentEnum } from '@/lib/content-registry'
 
 const SignInPage = () => {
-  const dispatch = useAppDispatch()
+  const { openDialog } = useDialogContext()
 
   // trigger sign in dialog box
   useEffect(() => {
-    dispatch(
-      openDialog({
-        allowClose: false,
-        dialogContentType: ContentEnum.SIGN_IN,
-      })
-    )
+    openDialog({
+      allowClose: false,
+      content: <SignIn />,
+    })
   }, [])
 
   return <></>

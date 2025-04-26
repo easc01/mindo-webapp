@@ -2,6 +2,7 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import DesktopSidePanel from '@/components/side-panel/side-panel'
 import { Toaster } from '@/components/ui/sonner'
 import AppDialog from './app-dialog'
+import { DialogProvider } from '@/context/dialog-context'
 
 interface Props {
   children: React.ReactNode
@@ -10,11 +11,13 @@ interface Props {
 const RootLayout: React.FC<Props> = ({ children }) => {
   return (
     <SidebarProvider className='font-ubuntu bg-app-dark-0 text-white'>
-      <DesktopSidePanel />
-      <Toaster />
-      <AppDialog />
+      <DialogProvider>
+        <DesktopSidePanel />
+        <Toaster />
 
-      <main className='w-full'>{children}</main>
+        <AppDialog />
+        <main className='w-full'>{children}</main>
+      </DialogProvider>
     </SidebarProvider>
   )
 }

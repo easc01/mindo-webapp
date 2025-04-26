@@ -8,13 +8,14 @@ import { useAppDispatch } from '@/hooks/redux'
 import { resetUserData, updateUserData } from '@/store/user-data-slice'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '@/navigation/routes'
-import { closeDialog } from '@/store/app-dialog-slice'
 import { ACCESS_TOKEN_KEY } from '@/lib/constants'
+import { useDialogContext } from '@/context/dialog-context'
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { mutateAsync: onSignIn } = useSignIn()
+  const { closeDialog } = useDialogContext()
 
   const handleLoginSuccess = async (res: CredentialResponse) => {
     try {
@@ -26,7 +27,7 @@ const SignIn: React.FC = () => {
           onSuccess: (data) => {
             localStorage.setItem(ACCESS_TOKEN_KEY, data.data.accessToken)
             dispatch(updateUserData(data.data))
-            dispatch(closeDialog())
+            closeDialog()
             navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)
           },
           onError: (error) => {
