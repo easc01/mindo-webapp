@@ -57,14 +57,14 @@ const DialogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-const useDialogContext = () => {
+const useDialog = () => {
   const context = useContext(DialogContext)
 
   if (!context) {
-    throw new Error('useDialogContext must be used within a DialogProvider')
+    throw new Error('useDialog must be used within a DialogProvider')
   }
 
   return context
 }
 
-export { useDialogContext, DialogProvider }
+export { useDialog, DialogProvider }

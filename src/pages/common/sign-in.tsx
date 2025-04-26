@@ -1,9 +1,9 @@
 import SignIn from '@/components/common/signin-dialog'
-import { useDialogContext } from '@/context/dialog-context'
+import { useDialog } from '@/context/dialog-context'
 import { useEffect } from 'react'
 
 const SignInPage = () => {
-  const { openDialog } = useDialogContext()
+  const { openDialog } = useDialog()
 
   // trigger sign in dialog box
   useEffect(() => {

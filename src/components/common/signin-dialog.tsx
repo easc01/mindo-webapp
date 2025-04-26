@@ -9,13 +9,13 @@ import { resetUserData, updateUserData } from '@/store/user-data-slice'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '@/navigation/routes'
 import { ACCESS_TOKEN_KEY } from '@/lib/constants'
-import { useDialogContext } from '@/context/dialog-context'
+import { useDialog } from '@/context/dialog-context'
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { mutateAsync: onSignIn } = useSignIn()
-  const { closeDialog } = useDialogContext()
+  const { closeDialog } = useDialog()
 
   const handleLoginSuccess = async (res: CredentialResponse) => {
     try {
