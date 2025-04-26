@@ -35,17 +35,17 @@ const DesktopSidePanel: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const routesWithSidePanel = [
-    ROUTES.PLAYLIST.PLAYLIST_MAIN,
-    ROUTES.QUIZ.QUIZ_MAIN,
-    ROUTES.COMMUNITIES.COMMUNITIES_MAIN,
+    ROUTES.PLAYLIST.MAIN,
+    ROUTES.QUIZ.MAIN,
+    ROUTES.COMMUNITIES.MAIN,
   ]
 
-  if (!routesWithSidePanel.includes(location.pathname as any)) {
+  if (!routesWithSidePanel.some((route) => location.pathname.includes(route))) {
     return <></>
   }
 
   return (
-    <Sidebar collapsible='offcanvas' className='bg-app-dark-1'>
+    <Sidebar collapsible='offcanvas' className='bg-app-dark-1 w-64'>
       <SidebarHeader className='flex-row'>
         <Avatar className='size-14'>
           <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
@@ -63,19 +63,19 @@ const DesktopSidePanel: React.FC = () => {
           title='Playlists'
           icon={<BookText />}
           items={playlists}
-          onHeaderClick={() => navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)}
+          onHeaderClick={() => navigate(ROUTES.PLAYLIST.MAIN)}
         />
         <SidePanelGroup
           title='Quizzes'
           icon={<BookOpenCheck />}
           items={quizzes}
-          onHeaderClick={() => navigate(ROUTES.QUIZ.QUIZ_MAIN)}
+          onHeaderClick={() => navigate(ROUTES.QUIZ.MAIN)}
         />
         <SidePanelGroup
           title='Communities'
           icon={<UsersRound />}
           items={communities}
-          onHeaderClick={() => navigate(ROUTES.COMMUNITIES.COMMUNITIES_MAIN)}
+          onHeaderClick={() => navigate(ROUTES.COMMUNITIES.MAIN)}
         />
       </SidebarContent>
 

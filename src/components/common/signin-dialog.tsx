@@ -28,7 +28,7 @@ const SignIn: React.FC = () => {
             localStorage.setItem(ACCESS_TOKEN_KEY, data.data.accessToken)
             dispatch(updateUserData(data.data))
             closeDialog()
-            navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)
+            navigate(ROUTES.PLAYLIST.MAIN)
           },
           onError: (error) => {
             dispatch(resetUserData())

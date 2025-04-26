@@ -10,7 +10,7 @@ import {
 import { useDialog } from '@/context/dialog-context'
 
 const AppDialog: React.FC = () => {
-  const { dialog, closeDialog } = useDialog()
+const { dialog, closeDialog } = useDialog()
   const { isOpen, action, content, allowClose } = dialog
 
   return (

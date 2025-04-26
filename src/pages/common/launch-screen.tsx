@@ -6,7 +6,7 @@ const LaunchScreen: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate(ROUTES.PLAYLIST.PLAYLIST_MAIN)
+    navigate(ROUTES.PLAYLIST.MAIN)
   }, [])
 
   return <></>

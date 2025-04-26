@@ -5,16 +5,20 @@ const ROUTES = {
   ERROR_403: '/error',
 
   PLAYLIST: {
-    PLAYLIST_MAIN: '/playlist',
+    MAIN: '/playlist',
+    PLAYLIST: (playlistId?: string) =>
+      `/playlist/${playlistId || ':playlistId'}`,
+    VIDEO: (playlistId?: string, topicId?: string, videoId?: string) =>
+      `/playlist/${playlistId || ':playlistId'}/${topicId || ':topicId'}/${videoId || ':videoId'}`,
   },
   COMMUNITIES: {
-    COMMUNITIES_MAIN: '/communities',
+    MAIN: '/community',
   },
   QUIZ: {
-    QUIZ_MAIN: '/quiz',
+    MAIN: '/quiz',
   },
   USER: {
-    USER_MAIN: '/user',
+    MAIN: '/user',
   },
 } as const
 

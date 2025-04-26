@@ -8,4 +8,8 @@ interface Token {
   accessToken: string
 }
 
-export type { APIResponse, Token }
+interface ClassNames {
+  component?: string
+}
+
+export type { APIResponse, Token, ClassNames }

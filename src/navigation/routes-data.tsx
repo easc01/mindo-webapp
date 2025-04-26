@@ -6,6 +6,8 @@ import LaunchScreen from '@/pages/common/launch-screen'
 import SignInPage from '@/pages/common/sign-in'
 import CommunityMainPage from '@/pages/community/community-main'
 import QuizMainPage from '@/pages/quiz/quiz-main'
+import PlaylistDedicatedPage from '@/pages/playlist/playlist-dedicated'
+import PlaylistVideoPage from '@/pages/playlist/playlist-video'
 
 interface Route {
   path: string
@@ -42,15 +44,25 @@ const publicRoutes: Route[] = [
 
 const playlistRoutes: Route[] = [
   {
-    path: ROUTES.PLAYLIST.PLAYLIST_MAIN,
+    path: ROUTES.PLAYLIST.MAIN,
     element: <PlaylistMainPage />,
     title: 'Playlist',
+  },
+  {
+    path: ROUTES.PLAYLIST.PLAYLIST(),
+    element: <PlaylistDedicatedPage />,
+    title: 'Playlist - Dedicated',
+  },
+  {
+    path: ROUTES.PLAYLIST.VIDEO(),
+    element: <PlaylistVideoPage />,
+    title: 'Playlist - Video',
   },
 ]
 
 const quizRoutes: Route[] = [
   {
-    path: ROUTES.QUIZ.QUIZ_MAIN,
+    path: ROUTES.QUIZ.MAIN,
     element: <QuizMainPage />,
     title: 'Playlist',
   },
@@ -58,7 +70,7 @@ const quizRoutes: Route[] = [
 
 const communityRoutes: Route[] = [
   {
-    path: ROUTES.COMMUNITIES.COMMUNITIES_MAIN,
+    path: ROUTES.COMMUNITIES.MAIN,
     element: <CommunityMainPage />,
     title: 'Playlist',
   },

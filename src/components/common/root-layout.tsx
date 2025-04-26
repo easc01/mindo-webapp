@@ -16,7 +16,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
         <Toaster />
 
         <AppDialog />
-        <main className='w-full'>{children}</main>
+        <main className='w-full pl-64'>{children}</main>
       </DialogProvider>
     </SidebarProvider>
   )
