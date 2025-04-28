@@ -6,6 +6,12 @@ interface PlaylistSectionProps {
   className?: string
 }
 
+interface PlaylistTopicProps {
+  topicId: string
+  topicName: string
+  topicNumber: number
+}
+
 interface PlaylistPreviewProps {
   playlistId: string
   title: string
@@ -40,6 +46,7 @@ interface LessonNotesProps {
 }
 
 export type {
+  PlaylistTopicProps,
   PlaylistSectionProps,
   PlaylistPreviewProps,
   PlaylistBannerProps,

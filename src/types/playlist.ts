@@ -12,4 +12,23 @@ interface PlaylistPreviewType {
   topicsCount: number
 }
 
-export type { PlaylistPreviewType }
+interface PlaylistData {
+  id: string
+  name: string
+  description: string
+  interestId: string
+  thumbnailUrl: string
+  views: number
+  code: string
+  createdAt: Date
+  updatedAt: Date
+  updatedBy: string
+  topics: TopicMini[]
+}
+
+interface TopicMini {
+  id: string
+  name: string
+}
+
+export type { PlaylistPreviewType, TopicMini, PlaylistData }

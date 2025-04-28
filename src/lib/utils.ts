@@ -13,5 +13,12 @@ export const trimCount = (balance: number): string =>
     maximumFractionDigits: 1,
   }).format(balance)
 
-export const timeAgo = (date: Date | number) =>
-  formatDistanceStrict(date, new Date(), { addSuffix: true })
+export const timeAgo = (date: Date) => {
+  try {
+    return formatDistanceStrict(date, new Date(), { addSuffix: true })
+  } catch (error) {
+    console.log('date', date)
+    console.error(error)
+    return ''
+  }
+}

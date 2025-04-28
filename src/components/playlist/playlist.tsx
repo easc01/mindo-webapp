@@ -5,6 +5,7 @@ import {
   PlaylistBannerProps,
   PlaylistPreviewProps,
   PlaylistSectionProps,
+  PlaylistTopicProps,
   PlaylistVideoLabelsProps,
 } from '@/pages/playlist/playlist-types'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -12,12 +13,16 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, ListVideo, RotateCcw, Search } from 'lucide-react'
 
-const PlaylistTopic: React.FC<{ id: string }> = ({ id }) => {
+const PlaylistTopic: React.FC<PlaylistTopicProps> = ({
+  topicId,
+  topicName,
+  topicNumber,
+}) => {
   const navigate = useNavigate()
   const { playlistId } = useParams()
 
   const onTopicClick = () => {
-    navigate(ROUTES.PLAYLIST.VIDEO(playlistId, id.toString(), ''))
+    navigate(ROUTES.PLAYLIST.VIDEO(playlistId, topicId, ''))
   }
 
   return (
@@ -25,7 +30,7 @@ const PlaylistTopic: React.FC<{ id: string }> = ({ id }) => {
       onClick={onTopicClick}
       className='hover:bg-app-dark-1 border-app-dark-1 min-h-10 w-full cursor-pointer rounded-md border-2 p-2'
     >
-      {id}. Understanding React Context
+      {topicNumber}. {topicName}
     </div>
   )
 }

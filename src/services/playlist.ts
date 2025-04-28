@@ -1,18 +1,21 @@
 import useApi from '@/lib/api'
 import API_URLS from '@/lib/api-urls'
 import { APIResponse } from '@/types/common'
-import { PlaylistPreviewType } from '@/types/playlist'
+import { PlaylistData, PlaylistPreviewType } from '@/types/playlist'
 
-const usePlaylistQuery = (playlistId?: string) => {
+const usePlaylistQuery = () => {
   const { useGet } = useApi()
-
-  const path = playlistId
-    ? `${API_URLS.PLAYLIST.MAIN}/${playlistId}`
-    : API_URLS.PLAYLIST.MAIN
-
-  return useGet<APIResponse<PlaylistPreviewType[]>>(path, [
+  return useGet<APIResponse<PlaylistPreviewType[]>>(API_URLS.PLAYLIST.MAIN, [
     API_URLS.PLAYLIST.MAIN,
   ])
 }
 
-export { usePlaylistQuery }
+const usePlaylistByIdQuery = (playlistId: string) => {
+  const { useGet } = useApi()
+  return useGet<APIResponse<PlaylistData>>(
+    `${API_URLS.PLAYLIST.MAIN}/${playlistId}`,
+    [API_URLS.PLAYLIST.MAIN, playlistId]
+  )
+}
+
+export { usePlaylistQuery, usePlaylistByIdQuery }
