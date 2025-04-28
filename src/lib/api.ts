@@ -7,12 +7,12 @@ import {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { appConfig } from './config'
-import { useAppSelector } from '@/hooks/redux'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '@/navigation/routes'
 import { useDispatch } from 'react-redux'
 import { resetUserData, updateUserData } from '@/store/user-data-slice'
 import { refreshUserToken } from '@/hooks/user'
+import { ACCESS_TOKEN_KEY } from './constants'
 
 enum HttpMethod {
   GET = 'GET',
@@ -45,7 +45,7 @@ const useApi = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const baseUrl = appConfig.serverBaseUrl
-  const { accessToken } = useAppSelector((state) => state.userData)
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY) ?? ''
 
   const request = async (
     endpoint: string,
