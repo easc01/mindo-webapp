@@ -1,3 +1,4 @@
+import { formatDistanceStrict } from 'date-fns'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -11,3 +12,6 @@ export const trimCount = (balance: number): string =>
     compactDisplay: 'short',
     maximumFractionDigits: 1,
   }).format(balance)
+
+export const timeAgo = (date: Date | number) =>
+  formatDistanceStrict(date, new Date(), { addSuffix: true })

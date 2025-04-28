@@ -4,13 +4,13 @@ const API_URLS = {
     REFRESH: '/auth/refresh',
   },
   PLAYLIST: {
-    PLAYLIST_MAIN: '/playlists',
+    MAIN: '/playlists',
   },
   COMMUNITIES: {
-    COMMUNITIES_MAIN: '/communities',
+    MAIN: '/communities',
   },
   QUIZ: {
-    QUIZ_MAIN: '/quizzes',
+    MAIN: '/quizzes',
   },
   USER: {
     USER: '/user',
