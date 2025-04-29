@@ -10,7 +10,7 @@ import { appConfig } from './config'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '@/navigation/routes'
 import { useDispatch } from 'react-redux'
-import { resetUserData, updateUserData } from '@/store/user-data-slice'
+import { resetUserData } from '@/store/user-data-slice'
 import { refreshUserToken } from '@/hooks/user'
 import { ACCESS_TOKEN_KEY } from './constants'
 
@@ -78,11 +78,7 @@ const useApi = () => {
 
       // token refreshed
       if (data && statusCode === 202) {
-        dispatch(
-          updateUserData({
-            accessToken: data.data.accessToken,
-          })
-        )
+        localStorage.setItem(ACCESS_TOKEN_KEY, data.data.accessToken)
         // retry with the new token
         response = await doFetch(data.data.accessToken)
       }

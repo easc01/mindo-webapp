@@ -10,6 +10,7 @@ interface PlaylistTopicProps {
   topicId: string
   topicName: string
   topicNumber: number
+  videoId: string
 }
 
 interface PlaylistPreviewProps {

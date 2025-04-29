@@ -8,8 +8,14 @@ import {
   PlaylistVideoLabels,
 } from '@/components/playlist/playlist'
 import { useEffect } from 'react'
+import { useFetchTopicVideos } from '@/services/playlist'
+import { useParams } from 'react-router-dom'
+import { timeAgo } from '@/lib/utils'
 
 const PlaylistVideoPage: React.FC = () => {
+  const { topicId, videoId } = useParams()
+  const { data } = useFetchTopicVideos(topicId ?? '', videoId ?? '')
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -17,42 +23,47 @@ const PlaylistVideoPage: React.FC = () => {
     })
   })
 
-  return (
-    <MainWrapper className='flex h-full flex-col gap-6 overflow-y-auto p-8'>
-      <VideoPlayer url='https://www.youtube.com/watch?v=b7YgXassC3c' />
+  if (data) {
+    const {
+      data: { moreVideos, video },
+    } = data
+    return (
+      <MainWrapper className='flex h-full flex-col gap-6 overflow-y-auto p-8'>
+        <VideoPlayer url={`https://www.youtube.com/watch?v=${video.videoId}`} />
 
-      <PlaylistVideoLabels
-        title='1. Top 10 useful libraries for JavaScript | freeCodeCamp'
-        uploadDate='10 months ago'
-        views={400000}
-        classNames={{
-          component: 'flex flex-col gap-2',
-          title: 'text-xl font-bold',
-          subLabels: 'text-base ',
-        }}
-      />
+        <PlaylistVideoLabels
+          title={video.title}
+          uploadDate={timeAgo(video.videoPublishedAt)}
+          views={0}
+          classNames={{
+            component: 'flex flex-col gap-2',
+            title: 'text-xl font-bold',
+            subLabels: 'text-base ',
+          }}
+        />
 
-      <Bar />
-      <LessonNotes lessonName='Top 10 useful libraries for JavaScript | freeCodeCamp' />
-      <Bar />
+        <Bar />
+        <LessonNotes lessonName={video.title} />
+        <Bar />
 
-      <h3 className='text-xl font-bold'>You might also like</h3>
+        <h3 className='text-xl font-bold'>You might also like</h3>
 
-      <PlaylistSection scrollDirection='horizontal'>
-        {Array.from({ length: 8 }).map((_, idx) => (
-          <PlaylistPreview
-            topicsCount={49}
-            playlistId={String(idx)}
-            key={idx}
-            title='Top 10 useful libraries for JavaScript | freeCodeCamp'
-            views={400000}
-            thumbnailUrl='https://i.ytimg.com/vi/c3Cn4xYfxJY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDSMcUYcLhdjSoAsBTFjoztuUSLGg'
-            uploadDate='10 months ago'
-          />
-        ))}
-      </PlaylistSection>
-    </MainWrapper>
-  )
+        <PlaylistSection scrollDirection='horizontal'>
+          {moreVideos.map((video) => (
+            <PlaylistPreview
+              key={video.id}
+              topicsCount={49}
+              playlistId={video.videoId}
+              title={video.title}
+              views={0}
+              thumbnailUrl={video.thumbnailUrl}
+              uploadDate={timeAgo(video.updatedAt)}
+            />
+          ))}
+        </PlaylistSection>
+      </MainWrapper>
+    )
+  }
 }
 
 export default PlaylistVideoPage

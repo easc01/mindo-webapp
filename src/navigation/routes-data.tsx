@@ -8,6 +8,7 @@ import CommunityMainPage from '@/pages/community/community-main'
 import QuizMainPage from '@/pages/quiz/quiz-main'
 import PlaylistDedicatedPage from '@/pages/playlist/playlist-dedicated'
 import PlaylistVideoPage from '@/pages/playlist/playlist-video'
+import LoadVideos from '@/pages/interceptor/load-videos'
 
 interface Route {
   path: string
@@ -52,6 +53,11 @@ const playlistRoutes: Route[] = [
     path: ROUTES.PLAYLIST.PLAYLIST(),
     element: <PlaylistDedicatedPage />,
     title: 'Playlist - Dedicated',
+  },
+  {
+    path: ROUTES.PLAYLIST.LOAD_VIDEOS(),
+    element: <LoadVideos />,
+    title: 'Playlist - Loading Videos',
   },
   {
     path: ROUTES.PLAYLIST.VIDEO(),

@@ -8,6 +8,8 @@ const ROUTES = {
     MAIN: '/playlist',
     PLAYLIST: (playlistId?: string) =>
       `/playlist/${playlistId || ':playlistId'}`,
+    LOAD_VIDEOS: (playlistId?: string, topicId?: string) =>
+      `/playlist/${playlistId || ':playlistId'}/${topicId || ':topicId'}`,
     VIDEO: (playlistId?: string, topicId?: string, videoId?: string) =>
       `/playlist/${playlistId || ':playlistId'}/${topicId || ':topicId'}/${videoId || ':videoId'}`,
   },

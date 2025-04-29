@@ -40,6 +40,7 @@ const PlaylistDedicatedPage: React.FC = () => {
                   topicId={topic.id}
                   topicName={topic.name}
                   topicNumber={i + 1}
+                  videoId={topic.videoId}
                 />
               ))}
             </PlaylistGrid>

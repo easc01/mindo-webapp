@@ -29,6 +29,32 @@ interface PlaylistData {
 interface TopicMini {
   id: string
   name: string
+  videoId: string
 }
 
-export type { PlaylistPreviewType, TopicMini, PlaylistData }
+interface VideoData {
+  id: string
+  topicId: string
+  videoId: string
+  title: string
+  videoPublishedAt: Date
+  channelTitle: string
+  thumbnailUrl: string
+  expiryAt: Date
+  createdAt: Date
+  updatedAt: Date
+  updatedBy: string
+}
+
+interface GroupedVideosResponse {
+  video: VideoData
+  moreVideos: VideoData[]
+}
+
+export type {
+  PlaylistPreviewType,
+  TopicMini,
+  PlaylistData,
+  VideoData,
+  GroupedVideosResponse,
+}

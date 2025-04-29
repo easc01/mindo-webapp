@@ -5,6 +5,7 @@ const API_URLS = {
   },
   PLAYLIST: {
     MAIN: '/playlists',
+    TOPICS: '/topics',
   },
   COMMUNITIES: {
     MAIN: '/communities',

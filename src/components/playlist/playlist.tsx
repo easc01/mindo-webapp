@@ -17,12 +17,17 @@ const PlaylistTopic: React.FC<PlaylistTopicProps> = ({
   topicId,
   topicName,
   topicNumber,
+  videoId,
 }) => {
   const navigate = useNavigate()
   const { playlistId } = useParams()
 
   const onTopicClick = () => {
-    navigate(ROUTES.PLAYLIST.VIDEO(playlistId, topicId, ''))
+    if (videoId) {
+      navigate(ROUTES.PLAYLIST.VIDEO(playlistId, topicId, videoId))
+    } else {
+      navigate(ROUTES.PLAYLIST.LOAD_VIDEOS(playlistId, topicId))
+    }
   }
 
   return (
