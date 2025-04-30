@@ -8,12 +8,12 @@ import {
   PlaylistSectionProps,
   PlaylistTopicProps,
   PlaylistTopicsHeaderProps,
+  SearchTagProps,
   VideoPreviewLabelsProps,
   VideoPreviewProps,
 } from '@/pages/playlist/playlist-types'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { ChevronDown, ListVideo, RotateCcw, Search } from 'lucide-react'
 
 const PlaylistTopic: React.FC<PlaylistTopicProps> = ({
@@ -103,16 +103,19 @@ const PlaylistGrid: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => <div className='grid grid-cols-1 gap-3 md:grid-cols-3'>{children}</div>
 
-const PlaylistSearchBar: React.FC = () => {
+const PlaylistSearchBar: React.FC<SearchTagProps> = ({
+  searchTag,
+  onSearchTagChange,
+}) => {
   return (
-    <div className='flex'>
+    <div className='relative'>
       <Input
+        value={searchTag}
+        onChange={(e) => onSearchTagChange(e.target.value)}
         placeholder='What would you like to study?'
-        className='bg-app-dark-1 border-app-dark-2 h-10 rounded-l-3xl rounded-r-none border-2'
+        className='bg-app-dark-1 border-app-dark-2 h-10 rounded-3xl border-2'
       />
-      <Button className='hover:bg-app-dark-2 h-10 w-16 rounded-l-none rounded-r-3xl'>
-        <Search className='stroke-app-dark-0 size-6 stroke-2' />
-      </Button>
+      <Search className='absolute stroke-app-dark-2 top-1/2 right-4 size-5 -translate-y-1/2 stroke-2' />
     </div>
   )
 }
@@ -265,9 +268,15 @@ const VideoPreviewLabels: React.FC<VideoPreviewLabelsProps> = ({
   </div>
 )
 
-const PlaylistMainHeader: React.FC = () => (
+const PlaylistMainHeader: React.FC<SearchTagProps> = ({
+  searchTag,
+  onSearchTagChange,
+}) => (
   <div className='sticky top-0 z-50 w-full p-4 backdrop-blur-lg'>
-    <PlaylistSearchBar />
+    <PlaylistSearchBar
+      searchTag={searchTag}
+      onSearchTagChange={onSearchTagChange}
+    />
   </div>
 )
 

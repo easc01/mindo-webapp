@@ -7,11 +7,12 @@ import {
   PlaylistPreviewType,
 } from '@/types/playlist'
 
-const usePlaylistQuery = () => {
+const usePlaylistQuery = (searchTag: string) => {
   const { useGet } = useApi()
-  return useGet<APIResponse<PlaylistPreviewType[]>>(API_URLS.PLAYLIST.MAIN, [
-    API_URLS.PLAYLIST.MAIN,
-  ])
+  return useGet<APIResponse<PlaylistPreviewType[]>>(
+    `${API_URLS.PLAYLIST.MAIN}?searchTag=${searchTag}`,
+    [API_URLS.PLAYLIST.MAIN, searchTag]
+  )
 }
 
 const usePlaylistByIdQuery = (playlistId: string) => {

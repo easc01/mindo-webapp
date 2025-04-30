@@ -65,6 +65,11 @@ interface LessonNotesProps {
   lessonName: string
 }
 
+interface SearchTagProps {
+  searchTag: string
+  onSearchTagChange: (s: string) => void
+}
+
 export type {
   PlaylistTopicProps,
   PlaylistSectionProps,
@@ -75,4 +80,5 @@ export type {
   PlaylistTopicsHeaderProps,
   VideoPreviewProps,
   VideoPreviewLabelsProps,
+  SearchTagProps,
 }
