@@ -3,9 +3,10 @@ import VideoPlayer from '@/components/common/video-player'
 import Bar from '@/components/common/bar'
 import {
   LessonNotes,
-  PlaylistPreview,
+  PlaylistPreviewLabels,
   PlaylistSection,
-  PlaylistVideoLabels,
+  VideoPreview,
+  VideoPreviewLabels,
 } from '@/components/playlist/playlist'
 import { useEffect } from 'react'
 import { useFetchTopicVideos } from '@/services/playlist'
@@ -13,7 +14,7 @@ import { useParams } from 'react-router-dom'
 import { timeAgo } from '@/lib/utils'
 
 const PlaylistVideoPage: React.FC = () => {
-  const { topicId, videoId } = useParams()
+  const { playlistId, topicId, videoId } = useParams()
   const { data } = useFetchTopicVideos(topicId ?? '', videoId ?? '')
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const PlaylistVideoPage: React.FC = () => {
       top: 0,
       behavior: 'instant',
     })
-  })
+  }, [])
 
   if (data) {
     const {
@@ -31,10 +32,10 @@ const PlaylistVideoPage: React.FC = () => {
       <MainWrapper className='flex h-full flex-col gap-6 overflow-y-auto p-8'>
         <VideoPlayer url={`https://www.youtube.com/watch?v=${video.videoId}`} />
 
-        <PlaylistVideoLabels
+        <VideoPreviewLabels
           title={video.title}
           uploadDate={timeAgo(video.videoPublishedAt)}
-          views={0}
+          channelName={video.channelTitle}
           classNames={{
             component: 'flex flex-col gap-2',
             title: 'text-xl font-bold',
@@ -50,14 +51,10 @@ const PlaylistVideoPage: React.FC = () => {
 
         <PlaylistSection scrollDirection='horizontal'>
           {moreVideos.map((video) => (
-            <PlaylistPreview
+            <VideoPreview
               key={video.id}
-              topicsCount={49}
-              playlistId={video.videoId}
-              title={video.title}
-              views={0}
-              thumbnailUrl={video.thumbnailUrl}
-              uploadDate={timeAgo(video.updatedAt)}
+              playlistId={playlistId ?? ''}
+              video={video}
             />
           ))}
         </PlaylistSection>

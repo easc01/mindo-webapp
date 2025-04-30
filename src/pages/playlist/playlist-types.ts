@@ -1,4 +1,5 @@
 import { ClassNames } from '@/types/common'
+import { VideoData } from '@/types/playlist'
 
 interface PlaylistSectionProps {
   scrollDirection?: 'vertical' | 'horizontal' | 'none'
@@ -28,6 +29,11 @@ interface PlaylistPreviewProps {
   topicsCount: number
 }
 
+interface VideoPreviewProps {
+  playlistId: string
+  video: VideoData
+}
+
 interface PlaylistBannerProps {
   bannerUrl: string
   name: string
@@ -41,9 +47,16 @@ interface PlaylistVideoLabelsClassNames extends ClassNames {
   subLabels?: string
 }
 
-interface PlaylistVideoLabelsProps {
+interface PlaylistPreviewLabelsProps {
   title: string
   views: number
+  uploadDate: string
+  classNames?: PlaylistVideoLabelsClassNames
+}
+
+interface VideoPreviewLabelsProps {
+  title: string
+  channelName: string
   uploadDate: string
   classNames?: PlaylistVideoLabelsClassNames
 }
@@ -57,7 +70,9 @@ export type {
   PlaylistSectionProps,
   PlaylistPreviewProps,
   PlaylistBannerProps,
-  PlaylistVideoLabelsProps,
+  PlaylistPreviewLabelsProps,
   LessonNotesProps,
   PlaylistTopicsHeaderProps,
+  VideoPreviewProps,
+  VideoPreviewLabelsProps,
 }

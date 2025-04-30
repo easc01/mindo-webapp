@@ -1,13 +1,15 @@
-import { cn, trimCount } from '@/lib/utils'
+import { cn, timeAgo, trimCount } from '@/lib/utils'
 import ROUTES from '@/navigation/routes'
 import {
   LessonNotesProps,
   PlaylistBannerProps,
+  PlaylistPreviewLabelsProps,
   PlaylistPreviewProps,
   PlaylistSectionProps,
   PlaylistTopicProps,
   PlaylistTopicsHeaderProps,
-  PlaylistVideoLabelsProps,
+  VideoPreviewLabelsProps,
+  VideoPreviewProps,
 } from '@/pages/playlist/playlist-types'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
@@ -174,7 +176,7 @@ const PlaylistPreview: React.FC<PlaylistPreviewProps> = ({
           <Skeleton className='size-10 rounded-full' />
         </span> */}
 
-        <PlaylistVideoLabels
+        <PlaylistPreviewLabels
           title={title}
           uploadDate={uploadDate}
           views={views}
@@ -184,7 +186,50 @@ const PlaylistPreview: React.FC<PlaylistPreviewProps> = ({
   )
 }
 
-const PlaylistVideoLabels: React.FC<PlaylistVideoLabelsProps> = ({
+const VideoPreview: React.FC<VideoPreviewProps> = ({
+  playlistId,
+  video: {
+    topicId,
+    videoId,
+    thumbnailUrl,
+    title,
+    channelTitle,
+    videoPublishedAt,
+  },
+}) => {
+  const navigate = useNavigate()
+
+  const onVideoClick = () => {
+    navigate(ROUTES.PLAYLIST.VIDEO(playlistId, topicId, videoId))
+  }
+
+  return (
+    <div
+      onClick={onVideoClick}
+      key={playlistId}
+      className='w-[370px] cursor-pointer'
+    >
+      <div
+        style={{
+          backgroundImage: `url('${thumbnailUrl}')`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+        className='bg-app-dark-2 relative mb-2 h-[209px] w-[370px] overflow-hidden rounded-md'
+      />
+
+      <div className='flex items-start gap-2'>
+        <VideoPreviewLabels
+          title={title}
+          uploadDate={timeAgo(videoPublishedAt)}
+          channelName={channelTitle}
+        />
+      </div>
+    </div>
+  )
+}
+
+const PlaylistPreviewLabels: React.FC<PlaylistPreviewLabelsProps> = ({
   title,
   views,
   uploadDate,
@@ -197,6 +242,24 @@ const PlaylistVideoLabels: React.FC<PlaylistVideoLabelsProps> = ({
     >
       <p>
         {trimCount(views) ?? 0} views - {uploadDate}
+      </p>
+    </span>
+  </div>
+)
+
+const VideoPreviewLabels: React.FC<VideoPreviewLabelsProps> = ({
+  title,
+  channelName,
+  uploadDate,
+  classNames,
+}) => (
+  <div className={classNames?.component}>
+    <p className={cn('line-clamp-2 font-medium', classNames?.title)}>{title}</p>
+    <span
+      className={cn('flex items-center gap-2 text-sm', classNames?.subLabels)}
+    >
+      <p>
+        {channelName} - {uploadDate}
       </p>
     </span>
   </div>
@@ -232,8 +295,10 @@ export {
   PlaylistSearchBar,
   PlaylistSection,
   PlaylistPreview,
-  PlaylistVideoLabels,
+  PlaylistPreviewLabels,
   PlaylistMainHeader,
   PlaylistTopicsHeader,
   LessonNotes,
+  VideoPreview,
+  VideoPreviewLabels,
 }
