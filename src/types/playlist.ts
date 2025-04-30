@@ -30,6 +30,7 @@ interface TopicMini {
   id: string
   name: string
   videoId: string
+  topicNumber: number
 }
 
 interface VideoData {
@@ -51,7 +52,11 @@ interface GroupedVideosResponse {
   moreVideos: VideoData[]
 }
 
+interface PlaylistUIState {
+}
+
 export type {
+  PlaylistUIState,
   PlaylistPreviewType,
   TopicMini,
   PlaylistData,

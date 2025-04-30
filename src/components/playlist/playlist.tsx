@@ -6,6 +6,7 @@ import {
   PlaylistPreviewProps,
   PlaylistSectionProps,
   PlaylistTopicProps,
+  PlaylistTopicsHeaderProps,
   PlaylistVideoLabelsProps,
 } from '@/pages/playlist/playlist-types'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -36,6 +37,35 @@ const PlaylistTopic: React.FC<PlaylistTopicProps> = ({
       className='hover:bg-app-dark-1 border-app-dark-1 min-h-10 w-full cursor-pointer rounded-md border-2 p-2'
     >
       {topicNumber}. {topicName}
+    </div>
+  )
+}
+
+const PlaylistTopicsHeader: React.FC<PlaylistTopicsHeaderProps> = ({
+  searchTag,
+  onSearchTagChange,
+  onSearch,
+}) => {
+  const onPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearch?.()
+    }
+  }
+
+  return (
+    <div className='mb-4 flex items-center justify-between'>
+      <h2 className='text-xl font-bold'>Lesson Plan</h2>
+
+      <div className='relative'>
+        <Input
+          value={searchTag}
+          onChange={(e) => onSearchTagChange(e.target.value)}
+          onKeyDown={(e) => onPressEnter(e)}
+          placeholder='Any topic in mind ?'
+          className='bg-app-dark-1 border-app-dark-2 h-10 rounded-3xl border-2'
+        />
+        <Search className='stroke-app-dark-2 absolute top-1/2 right-4 size-5 -translate-y-1/2 stroke-2' />
+      </div>
     </div>
   )
 }
@@ -204,5 +234,6 @@ export {
   PlaylistPreview,
   PlaylistVideoLabels,
   PlaylistMainHeader,
+  PlaylistTopicsHeader,
   LessonNotes,
 }

@@ -13,6 +13,12 @@ interface PlaylistTopicProps {
   videoId: string
 }
 
+interface PlaylistTopicsHeaderProps {
+  searchTag: string
+  onSearchTagChange: (s: string) => void
+  onSearch?: () => void
+}
+
 interface PlaylistPreviewProps {
   playlistId: string
   title: string
@@ -53,4 +59,5 @@ export type {
   PlaylistBannerProps,
   PlaylistVideoLabelsProps,
   LessonNotesProps,
+  PlaylistTopicsHeaderProps,
 }

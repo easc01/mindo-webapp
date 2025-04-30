@@ -1,9 +1,11 @@
+import { useMemo, useState } from 'react'
+import Fuse from 'fuse.js'
 import MainWrapper from '@/components/common/main-wrapper'
-import { Search } from 'lucide-react'
 import {
   PlaylistBanner,
   PlaylistGrid,
   PlaylistTopic,
+  PlaylistTopicsHeader,
 } from '@/components/playlist/playlist'
 import { usePlaylistByIdQuery } from '@/services/playlist'
 import { useParams } from 'react-router-dom'
@@ -12,6 +14,26 @@ import { timeAgo } from '@/lib/utils'
 const PlaylistDedicatedPage: React.FC = () => {
   const { playlistId } = useParams()
   const { data } = usePlaylistByIdQuery(playlistId ?? '')
+  const topicList = data?.data.topics ?? []
+
+  const [topicQuery, setTopicQuery] = useState<string>('')
+
+  const topicsFuse = useMemo(() => {
+    return new Fuse(topicList, {
+      keys: ['name', 'topicNumber'],
+      threshold: 0.3,
+    })
+  }, [topicList])
+
+  const matchedTopics = useMemo(() => {
+    return topicQuery
+      ? topicsFuse.search(topicQuery).map((r) => r.item)
+      : topicList
+  }, [topicQuery, topicsFuse, topicList])
+
+  const onTopicSearchTagChange = (s: string) => {
+    setTopicQuery(s)
+  }
 
   if (data) {
     return (
@@ -28,18 +50,18 @@ const PlaylistDedicatedPage: React.FC = () => {
           <p>{data.data.description}</p>
 
           <div className='mt-8'>
-            <div className='mb-4 flex items-center justify-between'>
-              <h2 className='text-xl font-bold'>Lesson Plan</h2>
-              <Search />
-            </div>
+            <PlaylistTopicsHeader
+              searchTag={topicQuery}
+              onSearchTagChange={onTopicSearchTagChange}
+            />
 
             <PlaylistGrid>
-              {data.data.topics.map((topic, i) => (
+              {matchedTopics.map((topic, i) => (
                 <PlaylistTopic
                   key={i}
                   topicId={topic.id}
                   topicName={topic.name}
-                  topicNumber={i + 1}
+                  topicNumber={topic.topicNumber}
                   videoId={topic.videoId}
                 />
               ))}
