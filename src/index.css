@@ -74,6 +74,10 @@
   * {
     @apply scrollbar-thin scrollbar-thumb-app-dark-2 scrollbar-track-app-dark-0;
   }
+
+  .text-2xs {
+    font-size: 10px;
+  }
 }
 
 @font-face {

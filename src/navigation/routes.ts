@@ -15,6 +15,8 @@ const ROUTES = {
   },
   COMMUNITIES: {
     MAIN: '/community',
+    CHAT: (communityId?: string) =>
+      `/community/${communityId || ':communityId'}`,
   },
   QUIZ: {
     MAIN: '/quiz',

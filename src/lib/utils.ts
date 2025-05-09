@@ -22,3 +22,10 @@ export const timeAgo = (date: Date) => {
     return ''
   }
 }
+
+export const getInitials = (sentence: string): string =>
+  sentence
+    .split(/\s+/)
+    .filter((word) => word.length > 0)
+    .map((word) => word[0].toUpperCase())
+    .join('')

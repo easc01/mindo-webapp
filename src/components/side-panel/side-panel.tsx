@@ -27,9 +27,12 @@ import {
   SidePanelGroupItemProps,
   SidePanelGroupProps,
 } from './side-panel-types'
-import { communities, playlists, quizzes } from './mock'
+import { playlists, quizzes } from './mock'
 import ROUTES from '@/navigation/routes'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '@/hooks/redux'
+import { getInitials } from '@/lib/utils'
+import AppProfile from '../common/app-profile'
 
 const DesktopSidePanel: React.FC = () => {
   const navigate = useNavigate()
@@ -40,6 +43,15 @@ const DesktopSidePanel: React.FC = () => {
     ROUTES.COMMUNITIES.MAIN,
   ]
 
+  const { name, username, profilePictureUrl, joinedCommunities } =
+    useAppSelector((state) => state.userData)
+
+  const sidePanelCommunity = joinedCommunities?.map((comm) => ({
+    label: comm.title,
+    icon: comm.logoUrl,
+    onClick: () => navigate(ROUTES.COMMUNITIES.CHAT(comm.id)),
+  }))
+
   if (!routesWithSidePanel.some((route) => location.pathname.includes(route))) {
     return <></>
   }
@@ -47,14 +59,16 @@ const DesktopSidePanel: React.FC = () => {
   return (
     <Sidebar collapsible='offcanvas' className='bg-app-dark-1 w-64'>
       <SidebarHeader className='flex-row'>
-        <Avatar className='size-14'>
-          <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <AppProfile
+          name={name}
+          username={username}
+          profileUrl={profilePictureUrl}
+          className='size-14'
+        />
 
         <div className='flex flex-col justify-center'>
-          <p className='text-sm'>@easc01</p>
-          <p className='font-medium'>ishantsikdar</p>
+          <p className='text-sm'>@{username}</p>
+          <p className='font-medium'>{name}</p>
         </div>
       </SidebarHeader>
 
@@ -74,7 +88,7 @@ const DesktopSidePanel: React.FC = () => {
         <SidePanelGroup
           title='Communities'
           icon={<UsersRound />}
-          items={communities}
+          items={sidePanelCommunity}
           onHeaderClick={() => navigate(ROUTES.COMMUNITIES.MAIN)}
         />
       </SidebarContent>

@@ -9,6 +9,7 @@ import QuizMainPage from '@/pages/quiz/quiz-main'
 import PlaylistDedicatedPage from '@/pages/playlist/playlist-dedicated'
 import PlaylistVideoPage from '@/pages/playlist/playlist-video'
 import LoadVideos from '@/pages/interceptor/load-videos'
+import CommunityChat from '@/pages/community/community-chat'
 
 interface Route {
   path: string
@@ -79,6 +80,11 @@ const communityRoutes: Route[] = [
     path: ROUTES.COMMUNITIES.MAIN,
     element: <CommunityMainPage />,
     title: 'Playlist',
+  },
+  {
+    path: ROUTES.COMMUNITIES.CHAT(),
+    element: <CommunityChat />,
+    title: 'Playlist - Chat',
   },
 ]
 

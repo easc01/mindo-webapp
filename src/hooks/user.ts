@@ -2,18 +2,18 @@ import useApi from '@/lib/api'
 import API_URLS from '@/lib/api-urls'
 import { appConfig } from '@/lib/config'
 import { APIResponse, Token } from '@/types/common'
-import { UserData } from '@/types/user'
+import { UserDataType } from '@/types/user'
 
 export const useSignIn = () => {
   const { usePost } = useApi()
-  return usePost<APIResponse<UserData>>(API_URLS.AUTH.GOOGLE_SIGNIN, [
+  return usePost<APIResponse<UserDataType>>(API_URLS.AUTH.GOOGLE_SIGNIN, [
     API_URLS.AUTH.GOOGLE_SIGNIN,
   ])
 }
 
 export const useGetUser = (enabled?: boolean) => {
   const { useGet } = useApi()
-  return useGet<APIResponse<UserData>>(
+  return useGet<APIResponse<UserDataType>>(
     API_URLS.USER.USER,
     [API_URLS.USER.USER],
     enabled
@@ -22,7 +22,7 @@ export const useGetUser = (enabled?: boolean) => {
 
 export const useUpdateUser = (userId: string) => {
   const { usePut } = useApi()
-  return usePut<UserData>(`${API_URLS.USER.USER}/${userId}`, [
+  return usePut<UserDataType>(`${API_URLS.USER.USER}/${userId}`, [
     API_URLS.USER.USER,
     userId,
   ])

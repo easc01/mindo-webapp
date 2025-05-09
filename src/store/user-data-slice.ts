@@ -1,7 +1,7 @@
-import { UserData } from '@/types/user'
+import { UserDataType } from '@/types/user'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: UserData = {
+const initialState: UserDataType = {
   accessToken: '',
   userId: '',
   userType: '',
@@ -13,6 +13,7 @@ const initialState: UserData = {
   mobile: '',
   email: '',
   lastLoginAt: '',
+  joinedCommunities: [],
   updatedAt: '',
   createdAt: '',
   updatedBy: '',
@@ -23,7 +24,10 @@ const userDataSlice = createSlice({
   initialState,
   reducers: {
     resetUserData: () => initialState,
-    updateUserData: (state, { payload }: PayloadAction<Partial<UserData>>) => ({
+    updateUserData: (
+      state,
+      { payload }: PayloadAction<Partial<UserDataType>>
+    ) => ({
       ...state,
       ...payload,
     }),

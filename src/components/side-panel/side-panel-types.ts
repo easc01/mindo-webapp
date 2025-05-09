@@ -6,6 +6,7 @@ interface SidePanelGroupProps {
 }
 
 interface SidePanelGroupItemProps {
+  icon?: string
   label: string
   onClick?: () => void
 }

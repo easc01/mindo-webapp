@@ -9,12 +9,14 @@ const API_URLS = {
   },
   COMMUNITIES: {
     MAIN: '/communities',
+    MESSAGES: (communityId: string, lastMessageTimestamp?: Date) =>
+      `/messages?communityId=${communityId}&lastMessageTime=${lastMessageTimestamp ?? ''}`,
   },
   QUIZ: {
     MAIN: '/quizzes',
   },
   USER: {
-    USER: '/user',
+    USER: '/users',
   },
 }
 

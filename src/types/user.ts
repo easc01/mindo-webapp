@@ -1,4 +1,6 @@
-interface UserData {
+import { CommunityType } from './community'
+
+interface UserDataType {
   accessToken: string
   userId: string
   userType: string
@@ -10,9 +12,10 @@ interface UserData {
   mobile: string
   email: string
   lastLoginAt: string
+  joinedCommunities: CommunityType[]
   updatedAt: string
   createdAt: string
   updatedBy: string
 }
 
-export type { UserData }
+export type { UserDataType }
