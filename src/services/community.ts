@@ -10,7 +10,7 @@ const useMessageHistory = (
   const { useGet } = useApi()
   return useGet<APIResponse<MessageGroupType[]>>(
     API_URLS.COMMUNITIES.MESSAGES(communityId, lastMessageTimestamp),
-    [API_URLS.COMMUNITIES.MESSAGES(communityId, lastMessageTimestamp)]
+    [API_URLS.COMMUNITIES.MESSAGES(communityId, lastMessageTimestamp)],
   )
 }
 

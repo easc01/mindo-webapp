@@ -9,4 +9,9 @@ interface MessageWindowProps {
   communityId: string
 }
 
-export type { MessageGroupProps, MessageWindowProps }
+interface MessageInputProps {
+  communityId: string
+  onSendMessage: (message: any) => void
+}
+
+export type { MessageGroupProps, MessageWindowProps, MessageInputProps }

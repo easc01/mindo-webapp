@@ -1,10 +1,17 @@
 import { cn } from '@/lib/utils'
+import { forwardRef } from 'react'
 
-const MainWrapper: React.FC<{
+type MainWrapperProps = {
   children?: React.ReactNode
   className?: string
-}> = ({ children, className }) => (
-  <div className={cn('relative size-full', className)}>{children}</div>
+}
+
+const MainWrapper = forwardRef<HTMLDivElement, MainWrapperProps>(
+  ({ children, className }, ref) => (
+    <div ref={ref} className={cn('relative size-full', className)}>
+      {children}
+    </div>
+  )
 )
 
 export default MainWrapper

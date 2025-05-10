@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Sidebar,
   SidebarContent,
@@ -27,12 +26,13 @@ import {
   SidePanelGroupItemProps,
   SidePanelGroupProps,
 } from './side-panel-types'
-import { playlists, quizzes } from './mock'
+import { quizzes } from './mock'
 import ROUTES from '@/navigation/routes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/hooks/redux'
-import { getInitials } from '@/lib/utils'
 import AppProfile from '../common/app-profile'
+import { useMemo } from 'react'
+import { cn } from '@/lib/utils'
 
 const DesktopSidePanel: React.FC = () => {
   const navigate = useNavigate()
@@ -43,14 +43,34 @@ const DesktopSidePanel: React.FC = () => {
     ROUTES.COMMUNITIES.MAIN,
   ]
 
-  const { name, username, profilePictureUrl, joinedCommunities } =
-    useAppSelector((state) => state.userData)
+  const {
+    name,
+    username,
+    profilePictureUrl,
+    color,
+    joinedCommunities,
+    recentPlaylists,
+  } = useAppSelector((state) => state.userData)
 
-  const sidePanelCommunity = joinedCommunities?.map((comm) => ({
-    label: comm.title,
-    icon: comm.logoUrl,
-    onClick: () => navigate(ROUTES.COMMUNITIES.CHAT(comm.id)),
-  }))
+  const sidePanelCommunity = useMemo(
+    () =>
+      joinedCommunities?.map((comm) => ({
+        label: comm.title,
+        icon: comm.logoUrl,
+        onClick: () => navigate(ROUTES.COMMUNITIES.CHAT(comm.id)),
+      })),
+    [joinedCommunities]
+  )
+
+  const sidePanelPlaylist = useMemo(
+    () =>
+      recentPlaylists.map((playlist) => ({
+        label: playlist.name,
+        icon: playlist.thumbnailUrl,
+        onClick: () => navigate(ROUTES.PLAYLIST.PLAYLIST(playlist.id)),
+      })),
+    [recentPlaylists]
+  )
 
   if (!routesWithSidePanel.some((route) => location.pathname.includes(route))) {
     return <></>
@@ -61,14 +81,15 @@ const DesktopSidePanel: React.FC = () => {
       <SidebarHeader className='flex-row'>
         <AppProfile
           name={name}
+          color={color}
           username={username}
           profileUrl={profilePictureUrl}
           className='size-14'
         />
 
         <div className='flex flex-col justify-center'>
-          <p className='text-sm'>@{username}</p>
-          <p className='font-medium'>{name}</p>
+          <p className='text-2xs'>@{username}</p>
+          <p className='text-lg font-medium'>{name}</p>
         </div>
       </SidebarHeader>
 
@@ -76,7 +97,7 @@ const DesktopSidePanel: React.FC = () => {
         <SidePanelGroup
           title='Playlists'
           icon={<BookText />}
-          items={playlists}
+          items={sidePanelPlaylist}
           onHeaderClick={() => navigate(ROUTES.PLAYLIST.MAIN)}
         />
         <SidePanelGroup
@@ -134,7 +155,9 @@ const SidePanelGroupItem: React.FC<SidePanelGroupItemProps> = ({
 }) => (
   <SidebarMenuSubItem
     onClick={onClick}
-    className='hover:bg-app-dark-2 rounded-md p-1 text-sm'
+    className={cn('hover:bg-app-dark-2 rounded-md p-2 text-sm', {
+      'cursor-pointer': !!onClick,
+    })}
   >
     {label}
   </SidebarMenuSubItem>
@@ -147,7 +170,9 @@ const SidePanelGroupHeader: React.FC<SidePanelGroupHeaderProps> = ({
 }) => (
   <SidebarMenuButton
     onClick={onClick}
-    className='hover:bg-app-dark-2 flex cursor-pointer justify-between text-lg'
+    className={cn('hover:bg-app-dark-2 flex justify-between text-lg', {
+      'cursor-pointer': !!onClick,
+    })}
   >
     <div className='flex items-center gap-2'>
       <span>{icon}</span>

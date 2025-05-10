@@ -5,6 +5,8 @@ import {
   useMutation,
   UseQueryResult,
   UseMutationResult,
+  UseQueryOptions,
+  UseMutationOptions,
 } from '@tanstack/react-query'
 import { appConfig } from './config'
 import { useNavigate } from 'react-router-dom'
@@ -27,7 +29,24 @@ interface RequestOptions {
   body?: any
 }
 
-const queryClient = new QueryClient()
+// Define default query and mutation options
+const defaultQueryOptions = {
+  retry: 3,
+  retryDelay: 1500,
+  refetchOnWindowFocus: true,
+  staleTime: 5 * 60 * 1000, // 5 minutes
+}
+
+const defaultMutationOptions = {
+  retry: 0,
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: defaultQueryOptions,
+    mutations: defaultMutationOptions,
+  },
+})
 
 const invalidateQueryKeys = (queryKeys: (string | object)[]) => {
   if (!queryKeys) return
@@ -91,29 +110,29 @@ const useApi = () => {
     return await response.json()
   }
 
+  /**
+   * Enhanced useGet hook that accepts full React Query options
+   */
   const useGet = <T>(
     endpoint: string,
     queryKey: (string | object)[],
-    enabled?: boolean
+    options?: Omit<UseQueryOptions<T, Error, T, any[]>, 'queryKey' | 'queryFn'>
   ): UseQueryResult<T, Error> => {
     return useQuery({
       queryKey,
       queryFn: () => request(endpoint, { method: HttpMethod.GET }),
-      retry: enabled ? Infinity : 0,
-      retryDelay: 1500,
-      enabled: enabled ?? true,
+      ...options,
     })
   }
 
+  /**
+   * Enhanced usePostQuery hook with full React Query options
+   */
   const usePostQuery = <T, TVariables = any>(
     endpoint: string,
     body: TVariables,
     queryKey: (string | object)[],
-    options?: {
-      enabled?: boolean
-      retry?: number
-      retryDelay?: number
-    }
+    options?: Omit<UseQueryOptions<T, Error, T, any[]>, 'queryKey' | 'queryFn'>
   ): UseQueryResult<T, Error> => {
     return useQuery({
       queryKey,
@@ -122,48 +141,64 @@ const useApi = () => {
           method: HttpMethod.POST,
           body,
         }),
-      retry: options?.retry ?? 3,
-      retryDelay: options?.retryDelay ?? 500,
-      enabled: options?.enabled ?? true,
+      ...options,
     })
   }
 
+  /**
+   * Enhanced usePost hook with full React Query mutation options
+   */
   const usePost = <T, TVariables = any>(
     endpoint: string,
-    queryKeys?: (string | object)[]
+    queryKeys?: (string | object)[],
+    options?: Omit<UseMutationOptions<T, Error, TVariables, unknown>, 'mutationFn'>
   ): UseMutationResult<T, Error, TVariables> => {
     return useMutation({
       mutationFn: (body: TVariables) =>
         request(endpoint, { method: HttpMethod.POST, body }),
-      onSuccess: () => {
+      onSuccess: (data, variables, context) => {
         invalidateQueryKeys(queryKeys ?? [])
+        options?.onSuccess?.(data, variables, context)
       },
-      retry: false,
+      ...options,
     })
   }
 
-  const usePut = <T>(
+  /**
+   * Enhanced usePut hook with full React Query mutation options
+   */
+  const usePut = <T, TVariables = any>(
     endpoint: string,
-    queryKeys?: (string | object)[]
-  ): UseMutationResult<T, Error, any> => {
+    queryKeys?: (string | object)[],
+    options?: Omit<UseMutationOptions<T, Error, TVariables, unknown>, 'mutationFn'>
+  ): UseMutationResult<T, Error, TVariables> => {
     return useMutation({
-      mutationFn: (body: any) =>
+      mutationFn: (body: TVariables) =>
         request(endpoint, { method: HttpMethod.PUT, body }),
-      onSuccess: () => {
+      onSuccess: (data, variables, context) => {
         invalidateQueryKeys(queryKeys ?? [])
+        options?.onSuccess?.(data, variables, context)
       },
+      ...options,
     })
   }
 
-  const useDelete = <T>(
+  /**
+   * Enhanced useDelete hook with full React Query mutation options
+   */
+  const useDelete = <T, TVariables = any>(
     endpoint: string,
-    queryKeys?: (string | object)[]
-  ): UseMutationResult<T, Error, void> => {
+    queryKeys?: (string | object)[],
+    options?: Omit<UseMutationOptions<T, Error, TVariables, unknown>, 'mutationFn'>
+  ): UseMutationResult<T, Error, TVariables> => {
     return useMutation({
-      mutationFn: () => request(endpoint, { method: HttpMethod.DELETE }),
-      onSuccess: () => {
+      mutationFn: () => 
+        request(endpoint, { method: HttpMethod.DELETE }),
+      onSuccess: (data, variables, context) => {
         invalidateQueryKeys(queryKeys ?? [])
+        options?.onSuccess?.(data, variables, context)
       },
+      ...options,
     })
   }
 

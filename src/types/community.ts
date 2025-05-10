@@ -14,6 +14,7 @@ interface MessageGroupType {
   userId: string
   name: string
   username: string
+  userColor: string
   userProfilePic: string
   messages: MessageDTO[]
 }
@@ -24,4 +25,8 @@ interface MessageDTO {
   timestamp: Date
 }
 
-export type { CommunityType, MessageGroupType, MessageDTO }
+interface ChatUIState {
+  messageInputMap: Record<string, string>
+}
+
+export type { CommunityType, MessageGroupType, MessageDTO, ChatUIState }

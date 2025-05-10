@@ -12,4 +12,31 @@ interface ClassNames {
   component?: string
 }
 
-export type { APIResponse, Token, ClassNames }
+interface ConnectSocketParams {
+  url: string
+  onOpen?: (e: Event) => void
+  onMessage?: (data: any) => void
+  onClose?: (e: CloseEvent) => void
+  onError?: (e: Event) => void
+}
+
+interface SocketMessage {
+  messageId: string
+  messageGroupId: string
+  userId: string
+  name: string
+  username: string
+  userProfilePic: string
+  userColor: string
+  communityId: string
+  content: string
+  timestamp: Date
+}
+
+export type {
+  APIResponse,
+  Token,
+  ClassNames,
+  ConnectSocketParams,
+  SocketMessage,
+}

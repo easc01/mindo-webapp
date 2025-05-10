@@ -15,6 +15,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
 import { ChevronDown, ListVideo, RotateCcw, Search } from 'lucide-react'
+import ImageFallback from '@/assets/images/books.png'
 
 const PlaylistTopic: React.FC<PlaylistTopicProps> = ({
   topicId,
@@ -115,7 +116,7 @@ const PlaylistSearchBar: React.FC<SearchTagProps> = ({
         placeholder='What would you like to study?'
         className='bg-app-dark-1 border-app-dark-2 h-10 rounded-3xl border-2'
       />
-      <Search className='absolute stroke-app-dark-2 top-1/2 right-4 size-5 -translate-y-1/2 stroke-2' />
+      <Search className='stroke-app-dark-2 absolute top-1/2 right-4 size-5 -translate-y-1/2 stroke-2' />
     </div>
   )
 }
@@ -162,7 +163,7 @@ const PlaylistPreview: React.FC<PlaylistPreviewProps> = ({
     >
       <div
         style={{
-          backgroundImage: `url('${thumbnailUrl}')`,
+          backgroundImage: `url('${thumbnailUrl || ImageFallback}')`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
         }}

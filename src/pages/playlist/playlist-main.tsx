@@ -28,7 +28,7 @@ const PlaylistsContent: React.FC<PlaylistContentProps> = ({
           playlistId={playlist.id}
           title={playlist.name}
           views={playlist.views}
-          thumbnailUrl='https://i.ytimg.com/vi/c3Cn4xYfxJY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDSMcUYcLhdjSoAsBTFjoztuUSLGg'
+          thumbnailUrl={''}
           uploadDate={timeAgo(playlist.createdAt)}
         />
       ))}

@@ -10,6 +10,7 @@ import {
 import { usePlaylistByIdQuery } from '@/services/playlist'
 import { useParams } from 'react-router-dom'
 import { timeAgo } from '@/lib/utils'
+import ImageFallback from '@/assets/images/books.png'
 
 const PlaylistDedicatedPage: React.FC = () => {
   const { playlistId } = useParams()
@@ -43,7 +44,7 @@ const PlaylistDedicatedPage: React.FC = () => {
           playlistCode={data.data.code}
           views={data.data.views}
           uploadDate={timeAgo(data.data.createdAt)}
-          bannerUrl='https://lh3.googleusercontent.com/proxy/S4QPxKJd-oK_9QzSZmteyfK06UZRSIgiC3irRo7ZaVi7J9AWX1gfqm5rIbGe9JDlr7J-f5PfJR0Ieg5uO1RRp0Hc1G4u5Zxlm9SSVw=w3840-h2160-p-k-no-nd-mv'
+          bannerUrl={ImageFallback}
         />
 
         <div className='w-full p-8'>

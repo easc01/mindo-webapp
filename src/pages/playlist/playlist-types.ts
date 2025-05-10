@@ -25,7 +25,7 @@ interface PlaylistPreviewProps {
   title: string
   views: number
   uploadDate: string
-  thumbnailUrl: string
+  thumbnailUrl?: string
   topicsCount: number
 }
 

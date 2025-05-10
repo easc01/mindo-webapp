@@ -6,6 +6,7 @@ interface AppProfileProps {
   name?: string
   profileUrl?: string
   className?: string
+  color?: string
 }
 
 const AppProfile: React.FC<AppProfileProps> = ({
@@ -13,11 +14,18 @@ const AppProfile: React.FC<AppProfileProps> = ({
   name = '',
   profileUrl = '',
   className = '',
+  color = 'black',
 }) => {
   return (
     <Avatar className={cn('size-10', className)}>
       <AvatarImage src={profileUrl} alt={`@${username}`} />
-      <AvatarFallback className='bg-black'>{getInitials(name)}</AvatarFallback>
+      <AvatarFallback
+        style={{
+          backgroundColor: color,
+        }}
+      >
+        {getInitials(name)}
+      </AvatarFallback>
     </Avatar>
   )
 }
