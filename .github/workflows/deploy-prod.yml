@@ -1,0 +1,50 @@
+name: Deploy React App
+
+on:
+  push:          
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code             
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js          
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Install dependencies     
+        run: npm install
+
+      - name: Build React app        
+        run: npm run build
+        env:
+          VITE_ENV: ${{ vars.VITE_ENV }}
+          VITE_APP_URL: ${{ vars.VITE_APP_URL }}
+          VITE_SERVER_BASE_URL: ${{ vars.VITE_SERVER_BASE_URL }}
+          VITE_WS_BASE_URL: ${{ vars.VITE_WS_BASE_URL }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+
+
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete
+        env:
+          AWS_APP_BUCKET: ${{ secrets.AWS_APP_BUCKET }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: 'dist' 
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ${{ secrets.AWS_REGION }}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.SWAY_CLIENT_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

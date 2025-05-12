@@ -1,18 +1,19 @@
+import Loader from '@/components/common/loader'
 import ROUTES from '@/navigation/routes'
-import { useFetchTopicVideos } from '@/services/playlist'
+import { useGeneratePlaylist } from '@/services/playlist'
 import { useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-const LoadVideos: React.FC = () => {
+const LoadPlaylist: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const { playlistId, topicId } = useParams()
-  const { isFetched, error, data } = useFetchTopicVideos(topicId!)
+  const { playlistTitle } = useParams()
+  const { isFetched, error, data } = useGeneratePlaylist(playlistTitle!)
 
   useEffect(() => {
     if (isFetched && data) {
-      const fetchedVideoId = data.data.video.videoId
-      navigate(ROUTES.PLAYLIST.VIDEO(playlistId, topicId, fetchedVideoId), {
+      const playlistId = data.data.id
+      navigate(ROUTES.PLAYLIST.PLAYLIST(playlistId), {
         replace: true,
       })
     }
@@ -25,7 +26,7 @@ const LoadVideos: React.FC = () => {
     }
   }, [error])
 
-  return <div className='loader absolute inset-0' />
+  return <Loader />
 }
 
-export default LoadVideos
+export default LoadPlaylist

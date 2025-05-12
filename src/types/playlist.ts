@@ -21,6 +21,7 @@ interface PlaylistData {
   views: number
   code: string
   createdAt: Date
+  isAIGen: boolean
   updatedAt: Date
   updatedBy: string
   topics: TopicMini[]
@@ -52,8 +53,7 @@ interface GroupedVideosResponse {
   moreVideos: VideoData[]
 }
 
-interface PlaylistUIState {
-}
+interface PlaylistUIState {}
 
 export type {
   PlaylistUIState,

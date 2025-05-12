@@ -37,4 +37,19 @@ const useFetchTopicVideos = (topicId: string, videoId?: string) => {
   ])
 }
 
-export { usePlaylistQuery, usePlaylistByIdQuery, useFetchTopicVideos }
+const useGeneratePlaylist = (playlistTitle: string) => {
+  const { usePostQuery } = useApi()
+
+  return usePostQuery<APIResponse<PlaylistData>>(
+    `${API_URLS.PLAYLIST.MAIN}/gen-ai?playlistTitle=${playlistTitle}`,
+    {},
+    [API_URLS.PLAYLIST.MAIN, 'gen-ai', playlistTitle]
+  )
+}
+
+export {
+  usePlaylistQuery,
+  usePlaylistByIdQuery,
+  useFetchTopicVideos,
+  useGeneratePlaylist,
+}

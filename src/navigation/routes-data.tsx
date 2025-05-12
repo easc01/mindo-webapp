@@ -10,6 +10,7 @@ import PlaylistDedicatedPage from '@/pages/playlist/playlist-dedicated'
 import PlaylistVideoPage from '@/pages/playlist/playlist-video'
 import LoadVideos from '@/pages/interceptor/load-videos'
 import CommunityChat from '@/pages/community/community-chat'
+import LoadPlaylist from '@/pages/interceptor/load-playlist'
 
 interface Route {
   path: string
@@ -55,6 +56,11 @@ const playlistRoutes: Route[] = [
     element: <PlaylistDedicatedPage />,
     title: 'Playlist - Dedicated',
   },
+  {
+    path: ROUTES.PLAYLIST.LOAD_PLAYLIST(),
+    element: <LoadPlaylist />,
+    title: 'Playlist - Generating'
+  },  
   {
     path: ROUTES.PLAYLIST.LOAD_VIDEOS(),
     element: <LoadVideos />,

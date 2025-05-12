@@ -132,7 +132,7 @@ const PlaylistSection: React.FC<PlaylistSectionProps> = ({
       {
         'w-full flex-row overflow-x-auto': scrollDirection === 'horizontal',
         'h-full flex-col overflow-y-auto': scrollDirection === 'vertical',
-        'justfiy-center flex-wrap items-center': scrollDirection === 'none',
+        'flex-wrap ': scrollDirection === 'none',
       },
       className
     )}
