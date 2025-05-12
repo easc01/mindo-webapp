@@ -3,7 +3,6 @@ import VideoPlayer from '@/components/common/video-player'
 import Bar from '@/components/common/bar'
 import {
   LessonNotes,
-  PlaylistPreviewLabels,
   PlaylistSection,
   VideoPreview,
   VideoPreviewLabels,

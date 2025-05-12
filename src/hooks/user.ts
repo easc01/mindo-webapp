@@ -16,7 +16,9 @@ export const useGetUser = (enabled?: boolean) => {
   return useGet<APIResponse<UserDataType>>(
     API_URLS.USER.USER,
     [API_URLS.USER.USER],
-    enabled
+    {
+      enabled,
+    }
   )
 }
 
