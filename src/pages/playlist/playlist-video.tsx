@@ -11,10 +11,11 @@ import { useEffect } from 'react'
 import { useFetchTopicVideos } from '@/services/playlist'
 import { useParams } from 'react-router-dom'
 import { timeAgo } from '@/lib/utils'
+import Loader from '@/components/common/loader'
 
 const PlaylistVideoPage: React.FC = () => {
   const { playlistId, topicId, videoId } = useParams()
-  const { data } = useFetchTopicVideos(topicId ?? '', videoId ?? '')
+  const { data, isLoading } = useFetchTopicVideos(topicId ?? '', videoId ?? '')
 
   useEffect(() => {
     window.scrollTo({
@@ -22,6 +23,10 @@ const PlaylistVideoPage: React.FC = () => {
       behavior: 'instant',
     })
   }, [])
+
+  if (isLoading) {
+    return <Loader />
+  }
 
   if (data) {
     const {

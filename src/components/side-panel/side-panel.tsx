@@ -103,7 +103,7 @@ const DesktopSidePanel: React.FC = () => {
         <SidePanelGroup
           title='Quizzes'
           icon={<BookOpenCheck />}
-          items={quizzes}
+          items={[]}
           onHeaderClick={() => navigate(ROUTES.QUIZ.MAIN)}
         />
         <SidePanelGroup

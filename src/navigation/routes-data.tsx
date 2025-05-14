@@ -11,6 +11,7 @@ import PlaylistVideoPage from '@/pages/playlist/playlist-video'
 import LoadVideos from '@/pages/interceptor/load-videos'
 import CommunityChat from '@/pages/community/community-chat'
 import LoadPlaylist from '@/pages/interceptor/load-playlist'
+import QuizDedicatedPage from '@/pages/quiz/quiz-dedicated'
 
 interface Route {
   path: string
@@ -59,8 +60,8 @@ const playlistRoutes: Route[] = [
   {
     path: ROUTES.PLAYLIST.LOAD_PLAYLIST(),
     element: <LoadPlaylist />,
-    title: 'Playlist - Generating'
-  },  
+    title: 'Playlist - Generating',
+  },
   {
     path: ROUTES.PLAYLIST.LOAD_VIDEOS(),
     element: <LoadVideos />,
@@ -78,6 +79,11 @@ const quizRoutes: Route[] = [
     path: ROUTES.QUIZ.MAIN,
     element: <QuizMainPage />,
     title: 'Playlist',
+  },
+  {
+    path: ROUTES.QUIZ.PLAY(),
+    element: <QuizDedicatedPage />,
+    title: 'Quiz',
   },
 ]
 

@@ -5,6 +5,7 @@ import { resetUserData, updateUserData } from '@/store/user-data-slice'
 import ROUTES from '@/navigation/routes'
 import { ACCESS_TOKEN_KEY } from '@/lib/constants'
 import { useGetUser } from '@/hooks/user'
+import Loader from '@/components/common/loader'
 
 const AuthWrapper = <P extends object>(
   WrappedComponent: React.ComponentType<P>
@@ -13,7 +14,7 @@ const AuthWrapper = <P extends object>(
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)
-    const { data } = useGetUser(!!accessToken)
+    const { data, isLoading } = useGetUser(!!accessToken)
 
     useEffect(() => {
       if (!accessToken) {
@@ -25,6 +26,10 @@ const AuthWrapper = <P extends object>(
         }
       }
     }, [data])
+
+    if (isLoading) {
+      return <Loader />
+    }
 
     return <WrappedComponent {...props} />
   }

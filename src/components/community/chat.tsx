@@ -18,6 +18,7 @@ import { MessageGroupType } from '@/types/community'
 import { SocketMessage } from '@/types/common'
 import connectSocket from '@/services/socket'
 import { appConfig } from '@/lib/config'
+import Loader from '../common/loader'
 
 const MessageGroup: React.FC<MessageGroupProps> = ({
   currentUserId,
@@ -222,7 +223,7 @@ const MessageWindow: React.FC<MessageWindowProps> = ({ communityId }) => {
   }, [data])
 
   if (isLoading) {
-    return <>...loading</>
+    return <Loader />
   }
 
   if (data) {

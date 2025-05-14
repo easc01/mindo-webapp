@@ -22,6 +22,7 @@ const ROUTES = {
   },
   QUIZ: {
     MAIN: '/quiz',
+    PLAY: (topicName?: string) => `/quiz/${topicName || ':topicName'}`,
   },
   USER: {
     MAIN: '/user',

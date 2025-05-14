@@ -11,10 +11,11 @@ import { usePlaylistByIdQuery } from '@/services/playlist'
 import { useParams } from 'react-router-dom'
 import { timeAgo } from '@/lib/utils'
 import ImageFallback from '@/assets/images/books.png'
+import Loader from '@/components/common/loader'
 
 const PlaylistDedicatedPage: React.FC = () => {
   const { playlistId } = useParams()
-  const { data } = usePlaylistByIdQuery(playlistId ?? '')
+  const { data, isLoading } = usePlaylistByIdQuery(playlistId ?? '')
   const topicList = data?.data.topics ?? []
 
   const [topicQuery, setTopicQuery] = useState<string>('')
@@ -34,6 +35,10 @@ const PlaylistDedicatedPage: React.FC = () => {
 
   const onTopicSearchTagChange = (s: string) => {
     setTopicQuery(s)
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   if (data) {

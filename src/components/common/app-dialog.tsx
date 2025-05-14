@@ -10,7 +10,7 @@ import {
 import { useDialog } from '@/context/dialog-context'
 
 const AppDialog: React.FC = () => {
-const { dialog, closeDialog } = useDialog()
+  const { dialog, closeDialog } = useDialog()
   const { isOpen, action, content, allowClose } = dialog
 
   return (
@@ -29,7 +29,7 @@ const { dialog, closeDialog } = useDialog()
         <DialogFooter>
           {action && (
             <Button
-              className='bg-app-dark-2 hover:bg-app-dark-0'
+              className='bg-app-dark-2 hover:bg-app-dark-0 cursor-pointer'
               onClick={action.execute}
             >
               {action.label}

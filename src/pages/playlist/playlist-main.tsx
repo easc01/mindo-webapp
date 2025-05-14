@@ -1,3 +1,4 @@
+import Loader from '@/components/common/loader'
 import MainWrapper from '@/components/common/main-wrapper'
 import {
   PlaylistMainHeader,
@@ -21,10 +22,14 @@ const PlaylistsContent: React.FC<PlaylistContentProps> = ({
 }) => {
   const navigate = useNavigate()
   const debouncedQuery = useDebounce(playlistQuery, 500)
-  const { data } = usePlaylistQuery(debouncedQuery)
+  const { data, isLoading } = usePlaylistQuery(debouncedQuery)
 
   const handleRouteToGenAI = () => {
     navigate(ROUTES.PLAYLIST.LOAD_PLAYLIST(debouncedQuery))
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (

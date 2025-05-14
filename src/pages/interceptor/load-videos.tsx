@@ -1,3 +1,4 @@
+import Loader from '@/components/common/loader'
 import ROUTES from '@/navigation/routes'
 import { useFetchTopicVideos } from '@/services/playlist'
 import { useEffect } from 'react'
@@ -25,7 +26,7 @@ const LoadVideos: React.FC = () => {
     }
   }, [error])
 
-  return <div className='loader absolute inset-0' />
+  return <Loader />
 }
 
 export default LoadVideos
