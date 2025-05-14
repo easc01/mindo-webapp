@@ -26,7 +26,6 @@ import {
   SidePanelGroupItemProps,
   SidePanelGroupProps,
 } from './side-panel-types'
-import { quizzes } from './mock'
 import ROUTES from '@/navigation/routes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/hooks/redux'
